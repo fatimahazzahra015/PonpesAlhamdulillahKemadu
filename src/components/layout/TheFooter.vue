@@ -1,10 +1,8 @@
 <template>
   <footer class="footer-section pt-5 pb-4">
     <div class="container">
-      <div class="row g-4">
-        <!-- Kolom 1: Brand & Sosial Media -->
-        <div class="col-md-4">
-          <!-- Brand -->
+      <div class="row g-4 text-start">
+        <div class="col-md-4 col-sm-12">
           <div class="d-flex align-items-center gap-2 mb-3">
             <div class="footer-brand-icon">
               <img 
@@ -22,12 +20,11 @@
             </div>
           </div>
 
-          <p class="footer-desc mb-3">
+          <p class="footer-desc mb-3" style="max-width: 320px;">
             Mendidik generasi Qur'ani yang berakhlak mulia, cerdas, dan bermanfaat bagi masyarakat melalui pendidikan Islam terpadu.
           </p>
 
-          <!-- Sosial Media -->
-          <div class="d-flex gap-2">
+          <div class="d-flex gap-2 mb-2 mb-md-0">
             <a href="#" class="social-circle" aria-label="Facebook">
               <VsxIcon iconName="Facebook" size="16" color="#ffffff" />
             </a>
@@ -40,27 +37,27 @@
           </div>
         </div>
 
-        <!-- Kolom 2: Kontak -->
-        <div class="col-md-4">
+        <div class="col-md-4 col-sm-6">
           <h6 class="footer-heading mb-3">Kontak</h6>
-          <div class="d-flex align-items-start gap-2 mb-3">
-            <VsxIcon iconName="Location" size="18" color="#f39c12" class="flex-shrink-0 mt-0" />
-            <span class="footer-text">Desa Kemadu, Kec. Sulang, Kab. Rembang, Jawa Tengah 59254</span>
-          </div>
-          <div class="d-flex align-items-center gap-2 mb-3">
-            <VsxIcon iconName="Call" size="18" color="#f39c12" class="flex-shrink-0" />
-            <a href="tel:+6281234567890" class="footer-link">0812-3456-7890</a>
-          </div>
-          <div class="d-flex align-items-center gap-2 mb-3">
-            <VsxIcon iconName="Sms" size="18" color="#f39c12" class="flex-shrink-0" />
-            <a href="mailto:info@alhamdulillahkemadu.sch.id" class="footer-link">info@alhamdulillahkemadu.sch.id</a>
+          <div class="footer-contact-wrapper">
+            <div class="d-flex align-items-start gap-2 mb-3">
+              <VsxIcon iconName="Location" size="18" color="#f39c12" class="flex-shrink-0 mt-1" />
+              <span class="footer-text">Desa Kemadu, Kec. Sulang, Kab. Rembang, Jawa Tengah 59254</span>
+            </div>
+            <div class="d-flex align-items-center gap-2 mb-3">
+              <VsxIcon iconName="Call" size="18" color="#f39c12" class="flex-shrink-0" />
+              <a href="tel:+6281234567890" class="footer-link">0812-3456-7890</a>
+            </div>
+            <div class="d-flex align-items-center gap-2 mb-3">
+              <VsxIcon iconName="Sms" size="18" color="#f39c12" class="flex-shrink-0" />
+              <a href="mailto:info@alhamdulillahkemadu.sch.id" class="footer-link text-break">info@alhamdulillahkemadu.sch.id</a>
+            </div>
           </div>
         </div>
 
-        <!-- Kolom 3: Unit Pendidikan -->
-        <div class="col-md-4">
+        <div class="col-md-4 col-sm-6">
           <h6 class="footer-heading mb-3">Unit Pendidikan</h6>
-          <ul class="list-unstyled mb-0">
+          <ul class="list-unstyled mb-0 footer-menu">
             <li class="mb-2">
               <router-link to="/akademik#mi" class="footer-link">MI Annuroniyyah</router-link>
             </li>
@@ -77,7 +74,6 @@
         </div>
       </div>
 
-      <!-- Copyright -->
       <hr class="footer-divider" />
       <div class="text-center footer-copy">
         &copy; {{ currentYear }} Ponpes Alhamdulillah Kemadu. Seluruh hak cipta dilindungi.
@@ -101,9 +97,8 @@ const currentYear = ref(new Date().getFullYear())
 
 // ── Kolom 1: Brand ──
 .footer-brand-icon {
-  width: 50px;
-  height: 50px;
-  border-radius: 8px;
+  width: 45px;
+  height: 45px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -175,6 +170,11 @@ const currentYear = ref(new Date().getFullYear())
   }
 }
 
+// ── Pembungkus Kontak Khusus Layar Desktop ──
+.footer-contact-wrapper {
+  max-width: 290px;
+}
+
 // ── Divider ──
 .footer-divider {
   border: none;
@@ -190,36 +190,13 @@ const currentYear = ref(new Date().getFullYear())
   color: rgba(255, 255, 255, 0.4);
 }
 
-// ── Responsive ──
+// ── Aturan Media Query ──
 @media (max-width: 767.98px) {
+  .footer-contact-wrapper {
+    max-width: 100%;
+  }
   .footer-section {
-    text-align: center;
-  }
-
-  .footer-brand-icon {
-    margin: 0 auto;
-  }
-
-  .footer-section .d-flex.align-items-center.gap-2.mb-3:first-child {
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-
-  .social-circle {
-    margin: 0 auto;
-  }
-
-  .footer-section .d-flex.gap-2:has(.social-circle) {
-    justify-content: center;
-  }
-
-  .footer-section .d-flex.align-items-start,
-  .footer-section .d-flex.align-items-center {
-    justify-content: center;
-  }
-
-  .footer-heading {
-    text-align: center;
+    padding: 0 10px;
   }
 }
 </style>

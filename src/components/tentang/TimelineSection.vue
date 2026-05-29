@@ -1,8 +1,7 @@
 <template>
   <section class="timeline-section section-padding">
     <div class="container">
-      <div class="row g-5">
-        <!-- Kiri: Label + Heading (sticky) -->
+      <div class="row g-4 g-lg-5">
         <div class="col-lg-4 col-md-5 timeline-left">
           <SectionLabel label="Sejarah Ponpes" />
           <SectionHeading heading="Perjalanan Tarbiyah Sejak 1998" />
@@ -11,21 +10,18 @@
           </p>
         </div>
 
-        <!-- Kanan: Timeline -->
         <div class="col-lg-8 col-md-7">
           <div class="timeline">
             <div
               v-for="(item, idx) in timelineData"
               :key="item.year"
               class="timeline-item d-flex gap-3"
-              :class="{ 'mb-5': idx < timelineData.length - 1 }"
+              :class="{ 'mb-4 mb-md-5': idx < timelineData.length - 1 }"
             >
-              <!-- Node Lingkaran -->
               <div class="timeline-node flex-shrink-0 d-flex align-items-center justify-content-center">
                 <span class="timeline-node-text">{{ item.year.slice(-2) }}</span>
               </div>
 
-              <!-- Konten -->
               <div class="timeline-content">
                 <div class="timeline-header">
                   <span class="timeline-year">{{ item.year }}</span>
@@ -53,14 +49,17 @@ const timelineData = timelineList
 <style lang="scss" scoped>
 .timeline-section {
   background: #ffffff;
+  padding: 60px 0; // Memastikan padding section aman
 }
 
-// ── Left Column: Sticky ──
+// ── Left Column: Sticky hanya aktif di desktop (md ke atas) ──
 .timeline-left {
-  position: sticky;
-  top: 90px;
-  align-self: flex-start;
-  height: fit-content;
+  @media (min-width: 768px) {
+    position: sticky;
+    top: 90px;
+    align-self: flex-start;
+    height: fit-content;
+  }
 }
 
 .timeline-intro {
@@ -70,13 +69,27 @@ const timelineData = timelineList
   line-height: 1.65;
 }
 
+// ── Induk Timeline (Garis ditaruh di sini agar kokoh) ──
 .timeline {
   position: relative;
   padding-left: 0;
+
+  &::before {
+    content: '';
+    position: absolute;
+    // Posisi horizontal: setengah dari lebar node (44px / 2 = 22px)
+    left: 22px; 
+    top: 22px; // Mulai dari tengah lingkaran pertama
+    bottom: 22px; // Berhenti di tengah lingkaran terakhir
+    width: 2px;
+    background: #d4e8d4;
+    z-index: 1;
+  }
 }
 
 .timeline-item {
   position: relative;
+  z-index: 2; // Menjaga teks & node di atas garis pembungkus
 }
 
 // ── Node Lingkaran ──
@@ -86,23 +99,7 @@ const timelineData = timelineList
   border-radius: 50%;
   background: #1a5c38;
   position: relative;
-  z-index: 2;
-
-  &::after {
-    content: '';
-    position: absolute;
-    top: 44px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 2px;
-    height: calc(100% + 3rem);
-    background: #d4e8d4;
-    z-index: 0;
-  }
-
-  .timeline-item:last-child &::after {
-    display: none;
-  }
+  z-index: 3;
 }
 
 .timeline-node-text {
@@ -115,7 +112,7 @@ const timelineData = timelineList
 
 // ── Konten ──
 .timeline-content {
-  padding-top: 2px;
+  padding-top: 8px; // Diselaraskan agar teks pas di tengah vertikal lingkaran
 }
 
 .timeline-header {
@@ -129,7 +126,7 @@ const timelineData = timelineList
 .timeline-year {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 1.1rem;
   color: #f5a623;
   white-space: nowrap;
 }
@@ -137,13 +134,13 @@ const timelineData = timelineList
 .timeline-separator {
   color: #f5a623;
   font-weight: 500;
-  display: none;
+  display: none; // Default sembunyi di layar super kecil (HP)
 }
 
 .timeline-title {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 1.1rem;
   color: #1a1a1a;
 }
 
@@ -154,6 +151,8 @@ const timelineData = timelineList
   line-height: 1.6;
 }
 
+/* ── RESPONSIVE TABLET & HP ── */
+
 @media (min-width: 576px) {
   .timeline-separator {
     display: inline;
@@ -161,22 +160,39 @@ const timelineData = timelineList
 }
 
 @media (max-width: 767.98px) {
+  .timeline-section {
+    padding: 40px 0;
+  }
+
+  // Sesuaikan posisi garis induk karena ukuran lingkaran mengecil (38px / 2 = 19px)
+  .timeline {
+    &::before {
+      left: 19px;
+      top: 19px;
+      bottom: 19px;
+    }
+  }
+
   .timeline-node {
     width: 38px;
     height: 38px;
-
-    &::after {
-      top: 38px;
-    }
   }
 
   .timeline-node-text {
     font-size: 0.6875rem;
   }
 
+  .timeline-content {
+    padding-top: 6px;
+  }
+
   .timeline-header {
-    flex-direction: column;
+    flex-direction: column; // Tahun dan Judul menumpuk rapi ke bawah di HP
     gap: 0.15rem;
+  }
+
+  .timeline-year, .timeline-title {
+    font-size: 1rem;
   }
 }
 </style>

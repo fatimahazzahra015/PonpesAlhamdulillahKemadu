@@ -1,19 +1,39 @@
 <template>
-  <nav class="mt-4" v-if="totalPages > 1">
-    <ul class="pagination justify-content-center gap-1">
-      <li class="page-item" :class="{ disabled: currentPage === 1 }">
-        <a class="page-link" href="#" @click.prevent="$emit('page', currentPage - 1)">&lsaquo;</a>
+  <nav class="d-flex justify-content-center mt-5" aria-label="Navigasi halaman">
+    <ul class="pagination-custom d-flex align-items-center gap-1 p-0 m-0">
+      <!-- Tombol Prev -->
+      <li>
+        <button 
+          class="page-btn" 
+          :disabled="currentPage === 1" 
+          @click="$emit('page', currentPage - 1)"
+          aria-label="Halaman sebelumnya"
+        >
+          &larr;
+        </button>
       </li>
-      <li
-        class="page-item"
-        v-for="page in totalPages"
-        :key="page"
-        :class="{ active: currentPage === page }"
-      >
-        <a class="page-link" href="#" @click.prevent="$emit('page', page)">{{ page }}</a>
+
+      <!-- Nomor Halaman -->
+      <li v-for="page in totalPages" :key="page">
+        <button 
+          class="page-number-btn" 
+          :class="{ 'page-number-btn--active': currentPage === page }"
+          @click="$emit('page', page)"
+        >
+          {{ page }}
+        </button>
       </li>
-      <li class="page-item" :class="{ disabled: currentPage === totalPages }">
-        <a class="page-link" href="#" @click.prevent="$emit('page', currentPage + 1)">&rsaquo;</a>
+
+      <!-- Tombol Next -->
+      <li>
+        <button 
+          class="page-btn" 
+          :disabled="currentPage === totalPages" 
+          @click="$emit('page', currentPage + 1)"
+          aria-label="Halaman selanjutnya"
+        >
+          &rarr;
+        </button>
       </li>
     </ul>
   </nav>
@@ -22,30 +42,59 @@
 <script setup>
 defineProps({
   currentPage: { type: Number, required: true },
-  totalPages: { type: Number, required: true },
+  totalPages: { type: Number, required: true }
 })
 
 defineEmits(['page'])
 </script>
 
 <style lang="scss" scoped>
-.page-link {
-  width: 40px;
-  height: 40px;
+.pagination-custom {
+  list-style: none;
+}
+
+.page-btn, .page-number-btn {
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  color: #4b5563;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  height: 38px;
+  min-width: 38px;
+  padding: 0 6px;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #1a5c38;
-  border-radius: 0.5rem !important;
-  padding: 0;
-  &:hover { background: #f0fdf4; }
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover:not(:disabled) {
+    border-color: #1a5c38;
+    color: #1a5c38;
+    background: #f0fdf4;
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    background: #f3f4f6;
+  }
 }
-.page-item.active .page-link {
-  background-color: #1a5c38;
-  border-color: #1a5c38;
-  color: #fff;
-}
-.page-item.disabled .page-link {
-  color: #9ca3af;
+
+.page-number-btn {
+  border-radius: 8px;
+  
+  &--active {
+    background: #1a5c38;
+    color: #ffffff;
+    border-color: #1a5c38;
+
+    &:hover {
+      background: #154a2d;
+      color: #ffffff;
+    }
+  }
 }
 </style>

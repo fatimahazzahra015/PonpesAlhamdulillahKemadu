@@ -15,3 +15,22 @@ defineProps({
   centered: { type: Boolean, default: false },
 })
 </script>
+
+<style lang="scss" scoped>
+.breadcrumb-item {
+  display: flex;
+  align-items: center;
+  + .breadcrumb-item::before {
+    float: none; // Membersihkan float bawaan bootstrap lama jika ada
+    content: ">" !important;
+    color: rgba(255, 255, 255, 0.8) !important; // Putih sedikit transparan agar tidak terlalu kontras
+    padding-right: var(--bs-breadcrumb-item-padding-x, 0.5rem);
+  }
+}
+.text-white-50 {
+  transition: color 0.2s ease;
+  &:hover {
+    color: #ffffff !important;
+  }
+}
+</style>
